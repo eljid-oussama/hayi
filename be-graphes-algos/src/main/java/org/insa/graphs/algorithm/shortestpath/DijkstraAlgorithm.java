@@ -8,15 +8,17 @@ import org.insa.graphs.algorithm.AbstractSolution.Status;
 import org.insa.graphs.algorithm.utils.BinaryHeap;
 import org.insa.graphs.model.*;
 
+//algorithme de Dijkstra pour trouver le plus court chemin dans un graphe
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
-    protected int ndSommetsVisites;
-    protected int nbSommets;
+    protected int nbSommetV;   //nombre de sommet deja visite
+    protected int nbSommet;
 
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
-        this.ndSommetsVisites = 0;
+        this.nbSommetV = 0;
     }
 
+    //utilise un tas binaire pour stocker les nœuds visités et un tableau de labels pour stocker les coûts et les prédecesseurs des nœuds.
     @Override
     protected ShortestPathSolution doRun() {
         boolean fin = false ;
@@ -26,37 +28,33 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
         ShortestPathSolution solution = null;
         
-        /*Tableau de Labels */
+        //tableau de Labels 
         Label tabLabels[] = new Label [sizeGraph];
-        
-     
-        /*Tas de Labels */
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
 
-        /*tableau des predecesseurs */
+        //tableau des predecesseurs  pour chaque sommet
         Arc[] predecessorArcs = new Arc[sizeGraph];
         
-        
-        /*ajout du sommet de depart */
+        //Ajout du sommet de départ
         Label depart = newLabel(data.getOrigin(),data) ;
         tabLabels[depart.getSommet_courant().getId()] = depart;
         tas.insert(depart);
         depart.setInTas();
         depart.setCout_realise(0);
 
-        /*Notify all observers that the origin has been processed.*/
+        //Notifier tous les observateurs que l'origine a été traitée
         notifyOriginProcessed(data.getOrigin());
 
-        /*Iterations: while il existe des sommets non marques */
+        //Itérations tant qu'il existe des sommets non marqués 
         while(!tas.isEmpty() && !fin){
 
             Label current = tas.deleteMin();
 
-            /*Notify all observers that a node has been marked */
+            //tous les observateurs qu'un sommet a été marqué
             notifyNodeMarked(current.getSommet_courant());
             current.setMarque();
 
-            /*si le noeud marque est deja notre destination , on arrete le parcours */
+            //si le noeud marque est deja notre destination , on arrete le parcours */
             if(current.getSommet_courant() == data.getDestination()){
                 fin = true ;
             }
@@ -75,25 +73,24 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                 if(successeurLabel == null){
                     tabLabels[successeurLabel.getSommet_courant().getId()] = newLabel(successeur, data);
                     /*On incremente le nombre des sommets visites pour le test de performance*/
-                    this.ndSommetsVisites++;
+                    this.nbSommetV++;
                 }
 
-                /*si le successeur n'est pas encore marque */
+                //si le successeur n'est pas encore marque 
                 if(!successeurLabel.getMarque()){
-                    /*si on obtient un meilleur cout */
-                    /*Alors on le met a jour */
-
+                    
+                    //si on obtient un meilleur coût pour le successeur
                     if((successeurLabel.getTotalCost()>(current.getcout_realise()+data.getCost(arcIter)
 						+(successeurLabel.getTotalCost()-successeurLabel.getcout_realise()))) 
 						|| (successeurLabel.getcout_realise()==Float.POSITIVE_INFINITY)){
+
                             successeurLabel.setCout_realise((current.getcout_realise()+(float)data.getCost(arcIter)));
                             successeurLabel.setPere(current.getSommet_courant());
-                            /*si le label est deja dans le tas */
-                            /*alors on met à jour sa position dans le tas */
+                            /*si le label est deja dans le tas on met à jour sa position dans le tas */
                             if(successeurLabel.getinTas()){
                                 tas.remove(successeurLabel);
                             }else{
-                                /*on ajoute le label dans le tas */
+                                //ajoute le label dans le tas 
                                 successeurLabel.setInTas();
                             }
                             tas.insert(successeurLabel);
@@ -118,7 +115,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                 arc = predecessorArcs[arc.getOrigin().getId()];
             }
 
-            /*Inverser le chemin  */
+            //Inverser le chemin:du nœud de destination au nœud de départ
             Collections.reverse(arcs);
 
             solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));

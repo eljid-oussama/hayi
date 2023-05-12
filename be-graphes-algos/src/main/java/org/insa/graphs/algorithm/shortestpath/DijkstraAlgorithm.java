@@ -12,6 +12,7 @@ import org.insa.graphs.model.*;
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     protected int nbSommetV;   //nombre de sommet deja visite
     protected int nbSommet;
+   
 
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
@@ -25,6 +26,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         final ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
         int sizeGraph = graph.size();
+        
 
         ShortestPathSolution solution = null;
         
@@ -39,6 +41,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         Label depart = newLabel(data.getOrigin(),data) ;
         tabLabels[depart.getSommet_courant().getId()] = depart;
         tas.insert(depart);
+     
         depart.setInTas();
         depart.setCout_realise(0);
 
@@ -49,9 +52,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         while(!tas.isEmpty() && !fin){
 
             Label current = tas.deleteMin();
+           
 
             //tous les observateurs qu'un sommet a été marqué
             notifyNodeMarked(current.getSommet_courant());
+            
+            // Vérification de l'ordre croissant des coûts des labels marqués
+            //System.out.println(current.getTotalCost());
             current.setMarque();
 
             //si le noeud marque est deja notre destination , on arrete le parcours */
@@ -71,8 +78,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
                 /*si ce successeur n'a pas de label , on lui associe un */
                 if(successeurLabel == null){
-                    tabLabels[successeurLabel.getSommet_courant().getId()] = newLabel(successeur, data);
-                    /*On incremente le nombre des sommets visites pour le test de performance*/
+                    //null pointer access
+                        //tabLabels[successeurLabel.getSommet_courant().getId()] = newLabel(successeur, data);
+                        //this.nbSommetV++;
+                    successeurLabel = newLabel(successeur, data); // Créez un nouveau Label
+                    tabLabels[successeur.getId()] = successeurLabel; // Mettez à jour le tableau de Labels avec le nouveau Label
                     this.nbSommetV++;
                 }
 
@@ -88,12 +98,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                             successeurLabel.setPere(current.getSommet_courant());
                             /*si le label est deja dans le tas on met à jour sa position dans le tas */
                             if(successeurLabel.getinTas()){
-                                tas.remove(successeurLabel);
+                                tas.remove(successeurLabel);  //nous avons bien utilise,sion il arrete car tous les sommets sont marque
+                               
                             }else{
                                 //ajoute le label dans le tas 
                                 successeurLabel.setInTas();
+                               
                             }
                             tas.insert(successeurLabel);
+                            
                             predecessorArcs[arcIter.getDestination().getId()] = arcIter ;
                      }
                 }
@@ -120,6 +133,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
             solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
         }
+        System.out.println("nombre de sommet visite "+nbSommetV);
+        
+
         return solution;
     }
 

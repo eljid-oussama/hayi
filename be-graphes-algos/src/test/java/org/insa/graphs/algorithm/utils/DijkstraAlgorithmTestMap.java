@@ -16,7 +16,7 @@ import org.insa.graphs.model.*;
 
 import org.junit.*;
 
-public class DijsktraAlgorithmTest {
+public class DijkstraAlgorithmTestMap {
 
     public void TestScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
 
@@ -124,7 +124,7 @@ public class DijsktraAlgorithmTest {
 
             String mapName = "C:/Users/Utilisateur/Desktop/3A MIC/Kimi/graphe/Maps/insa.mapgr";
 
-            DijsktraAlgorithmTest test = new DijsktraAlgorithmTest();
+            DijkstraAlgorithmTestMap test = new DijkstraAlgorithmTestMap();
             int  origine ;
             int destination;
 
@@ -151,7 +151,7 @@ public class DijsktraAlgorithmTest {
             System.out.println("test de distance avec la carte insa ");
 
             String mapName = "C:/Users/Utilisateur/Desktop/3A MIC/Kimi/graphe/Maps/insa.mapgr";
-            DijsktraAlgorithmTest Test = new DijsktraAlgorithmTest();
+            DijkstraAlgorithmTestMap Test = new DijkstraAlgorithmTestMap();
             int  origine ;
             int destination;
 

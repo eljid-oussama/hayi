@@ -1,4 +1,4 @@
-package org.insa.graphs.algorithm.shortestpath;
+package org.insa.graphs.algorithm.utils;
 
 import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.io.GraphReader;
@@ -10,13 +10,17 @@ import java.io.FileInputStream;
 
 import org.insa.graphs.algorithm.ArcInspector;
 import org.insa.graphs.algorithm.ArcInspectorFactory;
+import org.insa.graphs.algorithm.shortestpath.BellmanFordAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
 
 
-public class DijkstraAlgorithmTestWithMap {
+public class DijkstraAlgorithmTestMap {
 
 
 	public void TestScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
-
+		System.out.println("chiant!!!! ");
 		// Create a new BinaryGraphReader that read from the given input stream.
 		GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(mapName))));
 
@@ -25,7 +29,7 @@ public class DijkstraAlgorithmTestWithMap {
 
             //Argument invalide
 		if (typeEvaluation!=0 && typeEvaluation!=1) {
-			System.out.println("Argument invalide");
+			System.out.println("argument invalide ");
 		} else {
                  //// cas:hors du graphe ou sommets inexistent
 			if (origine<0 || destination<0 || origine>=(graph.size()-1) || destination>=(graph.size()-1)) { 

@@ -1,26 +1,25 @@
 package org.insa.graphs.algorithm.utils;
 
-import org.insa.graphs.model.Graph;
-import org.insa.graphs.model.io.GraphReader;
-// Create a new BinaryGraphReader 
 import org.insa.graphs.model.io.BinaryGraphReader;
+import org.insa.graphs.model.io.GraphReader;
+
 import java.io.DataInputStream;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-
-import org.insa.graphs.algorithm.ArcInspector;
-import org.insa.graphs.algorithm.ArcInspectorFactory;
+import org.insa.graphs.algorithm.*;
 import org.insa.graphs.algorithm.shortestpath.BellmanFordAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
+import org.insa.graphs.model.*;
 
 
-public class DijkstraAlgorithmTestMap {
+import org.junit.*;
 
+public class DijsktraAlgorithmTest {
 
-	public void TestScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
-		System.out.println("chiant!!!! ");
+    public void TestScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
+
 		// Create a new BinaryGraphReader that read from the given input stream.
 		GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(mapName))));
 
@@ -29,12 +28,12 @@ public class DijkstraAlgorithmTestMap {
 
             //Argument invalide
 		if (typeEvaluation!=0 && typeEvaluation!=1) {
-			System.out.println("argument invalide ");
+			System.out.println("Argument invalide");
 		} else {
                  //// cas:hors du graphe ou sommets inexistent
 			if (origine<0 || destination<0 || origine>=(graph.size()-1) || destination>=(graph.size()-1)) { 
 				System.out.println("ERREUR : Paramètres invalides ");
-				
+
 			} else {
                 //This class can be used to indicate to an algorithm which arcs can be used and the costs of the usable arcs..
 				ArcInspector arcInspectorDijkstra;
@@ -51,31 +50,31 @@ public class DijkstraAlgorithmTestMap {
                     // correspond au premième filtre "No filter (all arcs allowed)"
 					arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(0);
 				}
-				
-				
+
+
 				//afficher infos de depart et destination
 				System.out.println("Origine : " + origine);
 				System.out.println("Destination : " + destination);
-				
+
 				if(origine==destination) {
 					System.out.println("Origine et Destination identiques");
 					System.out.println("Cout solution: 0");
-					
+
 				} 
                 else 
                 {		
                     //conclurer des infos et mise a jour avec different algo
 					ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(destination), arcInspectorDijkstra);
-                    
+
                     //BellmanFord et Dijkstra
 					BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
 					DijkstraAlgorithm D = new DijkstraAlgorithm(data);
-					
+
 					// Recuperation des solutions de Bellman et Dijkstra pour comparer 
 					ShortestPathSolution solutionD = D.run();
 					ShortestPathSolution solutionB = B.run();
-	
-					
+
+
 					double costSolutionD;
 					double costSolutionB;
                     double CoutSolution;
@@ -84,7 +83,7 @@ public class DijkstraAlgorithmTestMap {
 						//Calcul du cout de la solution 
 						costSolutionD = solutionD.getPath().getMinimumTravelTime();
 						costSolutionB = solutionB.getPath().getMinimumTravelTime();
-                        
+
 					} else {
 						costSolutionD = solutionD.getPath().getLength();
 						costSolutionB = solutionB.getPath().getLength();
@@ -101,8 +100,8 @@ public class DijkstraAlgorithmTestMap {
                         }
                         System.out.println("Cout solution: " + CoutSolution);
                     }
-					
-					
+
+
 				}
 			}
 		}
@@ -111,4 +110,67 @@ public class DijkstraAlgorithmTestMap {
 	}
 
 
+    
+    
+    //@BeforeClass sert force l'execution de initiAll() avant toutes les meth de la classe;Cette méthode est exécutée une seule fois avant le démarrage de tous les tests de la classe 
+    @BeforeClass
+    
+
+    
+
+        public void testMapINSAdistance() throws Exception {
+
+            System.out.println("test de distance avec la carte insa ");
+
+            String mapName = "C:/Users/Utilisateur/Desktop/3A MIC/Kimi/graphe/Maps/insa.mapgr";
+
+            DijsktraAlgorithmTest test = new DijsktraAlgorithmTest();
+            int  origine ;
+            int destination;
+
+            System.out.println("test avec un chemin normal");
+            origine = 700 ;
+            destination = 300;
+            test.TestScenario(mapName, 1,origine,destination);
+
+
+            System.out.println("test avec un chemin null");
+            origine = 700 ;
+            destination = 90000;
+            test.TestScenario(mapName, 1, origine, destination);
+
+            System.out.println("test avec un chemin null");
+            origine = 700 ;
+            destination = 700;
+            test.TestScenario(mapName, 1,origine,destination);
+
+        }
+
+        public void testMapINSAtemps() throws Exception {
+
+            System.out.println("test de distance avec la carte insa ");
+
+            String mapName = "C:/Users/Utilisateur/Desktop/3A MIC/Kimi/graphe/Maps/insa.mapgr";
+            DijsktraAlgorithmTest Test = new DijsktraAlgorithmTest();
+            int  origine ;
+            int destination;
+
+            System.out.println("test avec un chemin normal");
+            origine = 700 ;
+            destination = 300;
+            Test.TestScenario(mapName, 0,origine,destination);
+
+
+            System.out.println("test avec un chemin null");
+            origine = 700 ;
+            destination = 90000;
+            Test.TestScenario(mapName, 0, origine, destination);
+
+            System.out.println("test avec un chemin null");
+            origine = 700 ;
+            destination = 700;
+            Test.TestScenario(mapName, 0,origine,destination);
+
+        }
 }
+

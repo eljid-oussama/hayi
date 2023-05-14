@@ -11,14 +11,19 @@ import org.insa.graphs.algorithm.shortestpath.BellmanFordAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
+import org.insa.graphs.algorithm.shortestpath.Test;
 import org.insa.graphs.model.*;
-
 
 import org.junit.*;
 
+<<<<<<< HEAD:be-graphes-algos/src/test/java/org/insa/graphs/algorithm/utils/DijsktraAlgorithmTest.java
 public class DijsktraAlgorithmTest {
     
    
+=======
+public class DijkstraAlgorithmTestMap {
+    @Test
+>>>>>>> 87bb7705dd0a82aa5d8bbc65ed1759e900105949:be-graphes-algos/src/test/java/org/insa/graphs/algorithm/utils/DijkstraAlgorithmTestMap.java
     public void testScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
 
 		// Create a new BinaryGraphReader that read from the given input stream.
@@ -113,6 +118,7 @@ public class DijsktraAlgorithmTest {
 
     
     
+<<<<<<< HEAD:be-graphes-algos/src/test/java/org/insa/graphs/algorithm/utils/DijsktraAlgorithmTest.java
     //@BeforeClass sert force l'execution de initiAll() avant toutes les meth de la classe;Cette méthode est exécutée une seule fois avant le démarrage de tous les tests de la classe 
     
 
@@ -173,5 +179,7 @@ public class DijsktraAlgorithmTest {
             Test.testScenario(mapName, 0,origine,destination);
 
         }
+=======
+>>>>>>> 87bb7705dd0a82aa5d8bbc65ed1759e900105949:be-graphes-algos/src/test/java/org/insa/graphs/algorithm/utils/DijkstraAlgorithmTestMap.java
 }
 

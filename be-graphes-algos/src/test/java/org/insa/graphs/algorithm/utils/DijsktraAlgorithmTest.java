@@ -17,8 +17,9 @@ import org.insa.graphs.model.*;
 import org.junit.*;
 
 public class DijsktraAlgorithmTest {
-
-    public void TestScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
+    
+   
+    public void testScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
 
 		// Create a new BinaryGraphReader that read from the given input stream.
 		GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(mapName))));
@@ -113,16 +114,15 @@ public class DijsktraAlgorithmTest {
     
     
     //@BeforeClass sert force l'execution de initiAll() avant toutes les meth de la classe;Cette méthode est exécutée une seule fois avant le démarrage de tous les tests de la classe 
-    @BeforeClass
     
 
-    
+       @Test 
 
         public void testMapINSAdistance() throws Exception {
 
             System.out.println("test de distance avec la carte insa ");
 
-            String mapName = "C:/Users/Utilisateur/Desktop/3A MIC/Kimi/graphe/Maps/insa.mapgr";
+            String mapName = "/home/el-jid/Bureau/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
 
             DijsktraAlgorithmTest test = new DijsktraAlgorithmTest();
             int  origine ;
@@ -131,26 +131,27 @@ public class DijsktraAlgorithmTest {
             System.out.println("test avec un chemin normal");
             origine = 700 ;
             destination = 300;
-            test.TestScenario(mapName, 1,origine,destination);
+            test.testScenario(mapName, 1,origine,destination);
 
 
             System.out.println("test avec un chemin null");
             origine = 700 ;
             destination = 90000;
-            test.TestScenario(mapName, 1, origine, destination);
+            test.testScenario(mapName, 1, origine, destination);
 
             System.out.println("test avec un chemin null");
             origine = 700 ;
             destination = 700;
-            test.TestScenario(mapName, 1,origine,destination);
+            test.testScenario(mapName, 1,origine,destination);
 
         }
-
+        
+       @Test 
         public void testMapINSAtemps() throws Exception {
 
             System.out.println("test de distance avec la carte insa ");
 
-            String mapName = "C:/Users/Utilisateur/Desktop/3A MIC/Kimi/graphe/Maps/insa.mapgr";
+            String mapName = "/home/el-jid/Bureau/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
             DijsktraAlgorithmTest Test = new DijsktraAlgorithmTest();
             int  origine ;
             int destination;
@@ -158,18 +159,18 @@ public class DijsktraAlgorithmTest {
             System.out.println("test avec un chemin normal");
             origine = 700 ;
             destination = 300;
-            Test.TestScenario(mapName, 0,origine,destination);
+            Test.testScenario(mapName, 0,origine,destination);
 
 
             System.out.println("test avec un chemin null");
             origine = 700 ;
             destination = 90000;
-            Test.TestScenario(mapName, 0, origine, destination);
+            Test.testScenario(mapName, 0, origine, destination);
 
             System.out.println("test avec un chemin null");
             origine = 700 ;
             destination = 700;
-            Test.TestScenario(mapName, 0,origine,destination);
+            Test.testScenario(mapName, 0,origine,destination);
 
         }
 }
